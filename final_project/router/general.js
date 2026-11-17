@@ -46,6 +46,17 @@ public_users.get('/',function (req, res) {
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   const isbn = req.params.isbn
+  const fetchBooks = new Promise((resolve, reject) => {
+    if(books) {
+        resolve(books)
+    } else {
+        reject("No data for books available")
+    }
+})
+
+fetchBooks
+.then(data => res.send(JSON.stringify(data, null, 4)))
+.catch(err => res.send("An error occured while fetching the books"))
   res.send(books[isbn])
 
  });
